@@ -2,7 +2,7 @@ from hill_climbing import climbing
 import a
 from Catur import Anak_Catur
 
-
+#Test
 soal = a.getList()
 a.printHasil(soal)
 print (a.totalConflict(soal, "PUTIH"))
