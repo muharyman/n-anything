@@ -78,7 +78,7 @@ def initialize_board(piece_groups):
     return pieces
 
 def draw_board(pieces):
-    """Returns the string representation of the board.
+    """Returns the string representation of a board's instance.
 
     Blank squares are represented by dots (.).
     White pieces are represented by capital letters.
@@ -345,8 +345,7 @@ def simulated_annealing(pieces, steps=1000, temperature=1, rate=10):
 
 
 # Tests
-def main():
-
+if __name__ == '__main__':
     # print('Test for read_input()')
     piece_groups = read_input()
     # print(piece_groups)
@@ -362,7 +361,7 @@ def main():
     # print('Test for pick_free_location(), initialize_board(), and draw_board()')
     # print('Use 64 pieces input to test pick_free_location()')
     pieces = initialize_board(piece_groups)
-    print(draw_board(pieces))
+    # print(draw_board(pieces))
 
     # print('Test for format_piece()')
     # piece = random.choice(pieces)
@@ -403,14 +402,11 @@ def main():
     # print(draw_board(new_pieces))
     # print(*count_all_attacks(new_pieces))
 
-    # print('Test for simulated_annealing()')
-    # print(draw_board(pieces))
-    # print(*count_all_attacks(pieces))
-    # new_pieces = simulated_annealing(
-    #     pieces, 1000, 1, 10
-    # )
-    # print(draw_board(new_pieces))
-    # print(*count_all_attacks(new_pieces))
-
-if __name__ == '__main__':
-    main()
+    print('Test for simulated_annealing()')
+    print(draw_board(pieces))
+    print(*count_all_attacks(pieces))
+    new_pieces = simulated_annealing(
+        pieces, 1000, 1, 10
+    )
+    print(draw_board(new_pieces))
+    print(*count_all_attacks(new_pieces))
