@@ -361,6 +361,7 @@ if __name__ == '__main__':
     # print('Test for pick_free_location(), initialize_board(), and draw_board()')
     # print('Use 64 pieces input to test pick_free_location()')
     pieces = initialize_board(piece_groups)
+    print(pieces)
     # print(draw_board(pieces))
 
     # print('Test for format_piece()')
@@ -402,11 +403,11 @@ if __name__ == '__main__':
     # print(draw_board(new_pieces))
     # print(*count_all_attacks(new_pieces))
 
-    print('Test for simulated_annealing()')
-    print(draw_board(pieces))
-    print(*count_all_attacks(pieces))
-    new_pieces = simulated_annealing(
-        pieces, 1000, 1, 10
-    )
-    print(draw_board(new_pieces))
-    print(*count_all_attacks(new_pieces))
+    # print('Test for simulated_annealing()')
+    # print(draw_board(pieces))
+    # print(*count_all_attacks(pieces))
+    # new_pieces = simulated_annealing(
+    #     pieces, 1000, 1, 10
+    # )
+    # print(draw_board(new_pieces))
+    # print(*count_all_attacks(new_pieces))
