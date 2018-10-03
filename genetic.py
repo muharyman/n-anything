@@ -298,41 +298,103 @@ def sortGen (gen, fitnessVal) :
     new = newGen, newFitnessVal
     return new
 
-def genetic (gen) :
+def genetic (gen,x) :
     new_gen = []
     idx_max = int(len(gen)*9/10)
     for i in range (0,idx_max) :
         new_gen.append(gen[i])
-    count = 1
-    for temp_gen in gen :
-        child1 = []
-        child2 = []
 
-        #Selection
-        idx_border = randint(1,(len(temp_gen)-1))
+    maxx = gen[0]
+    for aa in range (0,x) :
+        new_gens = []
+       
+        for temp_gen in gen :
+            child1 = []
+            child2 = []
+
+            #Selection
+            idx_border = randint(1,(len(temp_gen)-1))
+            
+            num_choose = randint(0,(len(new_gen)-1))
+
+            for i in range (0,idx_border) :
+                child1.append(temp_gen[i])
+                child2.append(new_gen[num_choose][i])
+
+            for i in range (idx_border,len(temp_gen)) :
+                child1.append(new_gen[num_choose][i])
+                child2.append(temp_gen[i])
+
+            if (count_all_attacks(child1)[0] > count_all_attacks(child2)[0]) :
+                new_gens.append(child2)
+                temp = child2
+            elif (count_all_attacks(child1)[0] < count_all_attacks(child2)[0]) :
+                new_gens.append(child1)
+                temp = child1
+            else :
+                if (count_all_attacks(child1)[1] < count_all_attacks(child2)[1]) :
+                    new_gens.append(child2)
+                    temp = child2
+                else :
+                    temp = child1
+                    new_gens.append(child1)
+
+            if (count_all_attacks(maxx)[0] > count_all_attacks(temp)[0]) :
+                maxx = temp
+            elif (count_all_attacks(maxx)[0] == count_all_attacks(temp)[0]) :
+                if (count_all_attacks(maxx)[1] < count_all_attacks(temp)[1]) :
+                    maxx = temp
+                
+            """
+            if (count_all_attacks(child1)[0] > count_all_attacks(temp_gen)[0]) :
+                new_gens.append(temp_gen)
+            elif (count_all_attacks(child1)[0] < count_all_attacks(temp_gen)[0]) :
+                new_gens.append(child1)
+            else :
+                if (count_all_attacks(child1)[1] < count_all_attacks(temp_gen)[1]) :
+                    new_gens.append(temp_gen)
+                else :
+                    new_gens.append(child1)
+
+            if (count_all_attacks(child2)[0] > count_all_attacks(new_gen)[0]) :
+                new_gens.append(new_gen)
+            elif (count_all_attacks(child2)[0] < count_all_attacks(new_gen)[0]) :
+                new_gens.append(child2)
+            else :
+                if (count_all_attacks(child2)[1] < count_all_attacks(new_gen)[1]) :
+                    new_gens.append(new_gen)
+                else :
+                    new_gens.append(child2)
+            """
+
+
+            #serang_sama1,serang_beda1 = count_all_attacks(child1)
+            #serang_sama2,serang_beda2 = count_all_attacks(child2)
+
+
+
+            """
+            #Mutation
+            child1[randint(0,len(child1))] = randint(0,len(child1))
+            idx_mut = randint(0,len(child1))
+            """
+            #print(draw_board(child1))
+            #print(draw_board(child2))
+
+            #print("\nGenerasi "+ str(count) + " : " + str(serang_sama1) + " " + str(serang_beda1))
+            #print("Generasi "+ str(count) + " : " + str(serang_sama2) + " " + str(serang_beda1) + "\n")       
+
+        gen_temp = []
+        for i in range(0,len(gen)) :
+            gen_temp.append(new_gens[i])
         
-        num_choose = randint(0,(len(new_gen)-1))
+        gen = sortGen(gen_temp, calcFitness(gen_temp))[0]
 
-        for i in range (0,idx_border) :
-            child1.append(temp_gen[i])
-            child2.append(new_gen[num_choose][i])
+    print(draw_board(maxx))
+    print(*count_all_attacks(maxx))
 
-        for i in range (idx_border,len(temp_gen)) :
-            child1.append(new_gen[num_choose][i])
-            child2.append(temp_gen[i])
-
-        serang_sama1,serang_beda1 = count_all_attacks(child1)
-        serang_sama2,serang_beda2 = count_all_attacks(child2)
-
-        print(draw_board(child1))
-        print(draw_board(child2))
-
-        print("\nGenerasi "+ str(count) + " : " + str(serang_sama1) + " " + str(serang_beda1) + "\n")
-        print("Generasi "+ str(count) + " : " + str(serang_sama2) + " " + str(serang_beda1) + "\n")       
-
-        count += 1
-
-gen = initPieces(5)
+gen = initPieces(100)
+print(gen[0])
 fitness = calcFitness(gen)
 sortbro = sortGen(gen,fitness)
-genetic(sortbro[0])
+genetic(sortbro[0],1000)
