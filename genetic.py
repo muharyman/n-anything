@@ -298,7 +298,7 @@ def sortGen (gen, fitnessVal) :
     new = newGen, newFitnessVal
     return new
 
-def crossOver (gen) :
+def genetic (gen) :
     new_gen = []
     idx_max = int(len(gen)*9/10)
     for i in range (0,idx_max) :
@@ -324,6 +324,9 @@ def crossOver (gen) :
         serang_sama1,serang_beda1 = count_all_attacks(child1)
         serang_sama2,serang_beda2 = count_all_attacks(child2)
 
+        print(draw_board(child1))
+        print(draw_board(child2))
+
         print("\nGenerasi "+ str(count) + " : " + str(serang_sama1) + " " + str(serang_beda1) + "\n")
         print("Generasi "+ str(count) + " : " + str(serang_sama2) + " " + str(serang_beda1) + "\n")       
 
@@ -332,4 +335,4 @@ def crossOver (gen) :
 gen = initPieces(5)
 fitness = calcFitness(gen)
 sortbro = sortGen(gen,fitness)
-crossOver(sortbro[0])
+genetic(sortbro[0])
