@@ -1,5 +1,6 @@
 import math
 import random
+from random import randint 
 import time
 
 board_size = 8
@@ -297,21 +298,38 @@ def sortGen (gen, fitnessVal) :
     new = newGen, newFitnessVal
     return new
 
-gen = initPieces(3)
-fitness = calcFitness(gen)
-sortbro = sortGen(gen,fitness)
-for piece in sortbro[0] :
-    print(draw_board(piece))
-    print(*count_all_attacks(piece))
-    print("\n")
+def crossOver (gen) :
+    new_gen = []
+    idx_max = int(len(gen)*9/10)
+    for i in range (0,idx_max) :
+        new_gen.append(gen[i])
+    count = 1
+    for temp_gen in gen :
+        child1 = []
+        child2 = []
 
-"""
-gen = initPieces(2)
-a.printHasil(gen[0])
-print("\n")
-a.printHasil(gen[1])
+        #Selection
+        idx_border = randint(1,(len(temp_gen)-1))
+        
+        num_choose = randint(0,(len(new_gen)-1))
+
+        for i in range (0,idx_border) :
+            child1.append(temp_gen[i])
+            child2.append(new_gen[num_choose][i])
+
+        for i in range (idx_border,len(temp_gen)) :
+            child1.append(new_gen[num_choose][i])
+            child2.append(temp_gen[i])
+
+        serang_sama1,serang_beda1 = count_all_attacks(child1)
+        serang_sama2,serang_beda2 = count_all_attacks(child2)
+
+        print("\nGenerasi "+ str(count) + " : " + str(serang_sama1) + " " + str(serang_beda1) + "\n")
+        print("Generasi "+ str(count) + " : " + str(serang_sama2) + " " + str(serang_beda1) + "\n")       
+
+        count += 1
+
+gen = initPieces(5)
 fitness = calcFitness(gen)
 sortbro = sortGen(gen,fitness)
-print (sortbro)
-print('\n')
-"""
+crossOver(sortbro[0])

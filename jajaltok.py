@@ -1,2 +1,1 @@
-for i in range (0,4) :
-    print (i)
+print(int(98*9/10))
