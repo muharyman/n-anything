@@ -1,8 +1,15 @@
-def hill_climbing(pieces):
+from board import initialize_board
+from board import draw_board
+from readFile import read_input
+from attackCount import count_all_attacks
+from board import pick_free_location
+import random
+
+def hill_climbing(pieces, steps=1000):
     """Solves the n-ything problem with hill-climbing algorithm."""
     total_same, total_different = count_all_attacks(pieces)
 
-    max_stuck = 1000
+    # max_stuck = 1000
     stuck_counter = 0
     while True:
         piece_to_be_moved = random.choice(pieces)
@@ -38,7 +45,7 @@ def hill_climbing(pieces):
         else:
             stuck_counter += 1
 
-        if stuck_counter == max_stuck:
+        if stuck_counter == steps:
             break
 
     return pieces

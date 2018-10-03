@@ -1,6 +1,8 @@
 import os
 
 from annealing_interface import annealing_interface
+from main_genetic import runGenetic
+from main_hillClimbing import runHillClimbing
 
 # import hill_climbing, simulated_annealing, genetic_algorithm
 
@@ -9,6 +11,15 @@ Success!
 (This is a dummy message)"""
 
 welcome = """
+ _______  _______  _______  _       __________________
+(  ___  )(  ____ )(  ____ \( (    /|\__    _/\__   __/
+| (   ) || (    )|| (    \/|  \  ( |   )  (     ) (   
+| |   | || (____)|| (__    |   \ | |   |  |     | |   
+| |   | ||     __)|  __)   | (\ \) |   |  |     | |   
+| |   | || (\ (   | (      | | \   |   |  |     | |   
+| (___) || ) \ \__| (____/\| )  \  ||\_)  )  ___) (___
+(_______)|/   \__/(_______/|/    )_)(____/   \_______/
+
 Welcome to Orenji N-ything Solver!
 Select mode:
 - Standard Mode (type 'standard')
@@ -102,41 +113,41 @@ def main():
         customize = prompt(customize_parameter)
 
         if customize in yes_variations:
-            steps = prompt(max_steps)
+            steps = int(prompt(max_steps))
             if algorithm == 'hc':
-                print(dummy)
-
+                runHillClimbing(filename, steps)
+                
             elif algorithm == 'sa':
-                temperature = prompt(starting_temperature)
-                rate = prompt(descent_rate)
+                temperature = float(prompt(starting_temperature))
+                rate = float(prompt(descent_rate))
                 annealing_interface(filename, steps, temperature, rate)
 
             elif algorithm == 'ga':
-                size = prompt(population_size)
-                chance = prompt(mutation_chance)
-                print(dummy)
+                size = int(prompt(population_size))
+                chance = float(prompt(mutation_chance))
+                runGenetic(filename, steps, size, chance)
 
         elif customize in no_variations:
             if algorithm == 'hc':
-                print(dummy)
+                runHillClimbing()
 
             elif algorithm == 'sa':
                 annealing_interface()
 
             elif algorithm == 'ga':
-                print(dummy)
+                runGenetic()
 
         else:
             print(wrong)
 
     elif mode == 'quickhc':
-        print(dummy)
+        runHillClimbing()
 
     elif mode == 'quicksa':
         annealing_interface()
 
     elif mode == 'quickga':
-        print(dummy)
+        runGenetic()
 
     elif mode in help_variations:
         print(help_message)
