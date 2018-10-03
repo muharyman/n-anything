@@ -4,6 +4,7 @@ from board import initialize_board
 from attackCount import count_all_attacks
 from random import randint 
 from board import draw_board
+from board import is_overlapping
 
 # Mengembalikan inisiasi awal sebanyak x gen
 
@@ -87,6 +88,30 @@ def genetic_process (gen,x) :
                 child1.append(new_gen[num_choose][i])
                 child2.append(temp_gen[i])
 
+            #Mutation
+            x_temp = randint(0,7)
+            y_temp = randint(0,7)
+            pos_temp = [x_temp,y_temp]
+            while (is_overlapping(child1, pos_temp)) :
+                x_temp = randint(0,7)
+                y_temp = randint(0,7)
+                pos_temp = [x_temp,y_temp]
+
+            idx_mut = randint(0,(len(child1) - 1))
+
+            temp_child = [child1[idx_mut][0],child1[idx_mut][1],x_temp,y_temp]
+            child1[idx_mut] = temp_child
+
+            while (is_overlapping(child2, pos_temp)) :
+                x_temp = randint(0,7)
+                y_temp = randint(0,7)
+                pos_temp = [x_temp,y_temp]
+
+            idx_mut = randint(0,(len(child2) - 1))
+
+            temp_child = [child2[idx_mut][0],child2[idx_mut][1],x_temp,y_temp]
+            child2[idx_mut] = temp_child
+
             if (count_all_attacks(child1)[0] > count_all_attacks(child2)[0]) :
                 new_gens.append(child2)
                 temp = child2
@@ -106,12 +131,6 @@ def genetic_process (gen,x) :
             elif (count_all_attacks(maxx)[0] == count_all_attacks(temp)[0]) :
                 if (count_all_attacks(maxx)[1] < count_all_attacks(temp)[1]) :
                     maxx = temp
-                
-            """
-            #Mutation
-            child1[randint(0,len(child1))] = randint(0,len(child1))
-            idx_mut = randint(0,len(child1))
-            """
 
         gen_temp = []
         for i in range(0,len(gen)) :
